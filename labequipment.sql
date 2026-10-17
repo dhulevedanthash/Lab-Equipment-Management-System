@@ -228,6 +228,17 @@ GRANT SELECT ON LabEquipmentDB.Components TO 'lab_student'@'localhost';
 REVOKE INSERT ON LabEquipmentDB.ComponentRequests FROM 'lab_student'@'localhost';
 SHOW GRANTS FOR 'lab_admin'@'localhost';
 SHOW TABLES;
+INSERT INTO Students (student_name, email, department, password_hash) VALUES
+('Vedant Dhule', 'vedant@example.com', 'Computer Science', 'hash001'),
+('Rahul Sharma', 'rahul@example.com', 'Information Technology', 'hash002'),
+('Priya Patil', 'priya@example.com', 'Computer Science', 'hash003'),
+('Amit Kulkarni', 'amit@example.com', 'Electronics', 'hash004'),
+('Sneha Joshi', 'sneha@example.com', 'Information Technology', 'hash005'),
+('Rohan Deshmukh', 'rohan@example.com', 'Mechanical', 'hash006'),
+('Neha Pawar', 'neha@example.com', 'Computer Science', 'hash007'),
+('Akash Jadhav', 'akash@example.com', 'Electronics', 'hash008'),
+('Pooja More', 'pooja@example.com', 'Information Technology', 'hash009'),
+('Karan Shah', 'karan@example.com', 'Mechanical', 'hash010');
 DESCRIBE Components;
 DESCRIBE ComponentRequests;
 CREATE TABLE Example (id INT PRIMARY KEY AUTO_INCREMENT, quantity INT CHECK (quantity >= 0));
