@@ -193,9 +193,41 @@ SHOW GRANTS FOR 'lab_student'@'localhost';
 -- 14. DISPLAY ALL TABLES
 SHOW TABLES;
 
-SELECT * FROM Equipment
-WHERE condition_status = 'Damaged';
+-- 15 POSSIBLE QURIES
 
-UPDATE Equipment
-SET condition_status = 'Working'
-WHERE equipment_id = 4;
+SELECT * FROM Equipment WHERE condition_status = 'Damaged';
+SELECT * FROM Components;
+SELECT * FROM Students;
+SELECT component_name, quantity FROM Components;
+SELECT * FROM Components WHERE condition_status = 'Damaged';
+SELECT * FROM Components WHERE quantity > 10;
+SELECT component_id, component_name, quantity FROM Components WHERE quantity > 0 AND condition_status = 'Working';
+INSERT INTO Components (component_name, quantity, condition_status) VALUES ('Mouse', 15, 'Working');
+UPDATE Components SET quantity = 30 WHERE component_id = 2;
+UPDATE Components SET condition_status = 'Working' WHERE component_id = 3;
+DELETE FROM Components WHERE component_id = 4;
+SELECT COUNT(*) AS total_components FROM Components;
+SELECT SUM(quantity) AS total_stock FROM Components;
+SELECT AVG(quantity) AS average_quantity FROM Components;
+SELECT MAX(quantity) AS maximum_quantity FROM Components;
+SELECT condition_status, COUNT(*) AS total FROM Components GROUP BY condition_status;
+SELECT s.student_name, c.component_name, r.request_quantity, r.request_status FROM ComponentRequests r JOIN Students s ON r.student_id = s.student_id JOIN Components c ON r.component_id = c.component_id;
+SELECT r.request_id, s.student_name, r.request_date, r.request_status FROM ComponentRequests r JOIN Students s ON r.student_id = s.student_id;
+SELECT cr.return_id, c.component_name, cr.return_quantity, cr.return_status FROM ComponentReturns cr JOIN ComponentRequests r ON cr.request_id = r.request_id JOIN Components c ON r.component_id = c.component_id;
+SELECT c.component_name, r.request_id, r.request_status FROM Components c LEFT JOIN ComponentRequests r ON c.component_id = r.component_id;
+INSERT INTO ComponentRequests (student_id, component_id, request_quantity) VALUES (1, 1, 1);
+SELECT * FROM ComponentRequests WHERE student_id = 1;
+SELECT * FROM ComponentRequests WHERE request_status = 'Pending';
+UPDATE ComponentRequests SET request_status = 'Approved' WHERE request_id = 1;
+INSERT INTO ComponentReturns (request_id, return_quantity) VALUES (1, 1);
+UPDATE ComponentReturns SET return_status = 'Approved' WHERE return_id = 1;
+SELECT * FROM Components WHERE quantity > (SELECT AVG(quantity) FROM Components);
+SELECT * FROM Components ORDER BY quantity DESC;
+SELECT * FROM Components ORDER BY quantity DESC LIMIT 3;
+GRANT SELECT ON LabEquipmentDB.Components TO 'lab_student'@'localhost';
+REVOKE INSERT ON LabEquipmentDB.ComponentRequests FROM 'lab_student'@'localhost';
+SHOW GRANTS FOR 'lab_admin'@'localhost';
+SHOW TABLES;
+DESCRIBE Components;
+DESCRIBE ComponentRequests;
+CREATE TABLE Example (id INT PRIMARY KEY AUTO_INCREMENT, quantity INT CHECK (quantity >= 0));
